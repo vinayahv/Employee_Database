@@ -1,14 +1,14 @@
 package com.emp.emp.project.entity;
 
-import lombok.Data;
 
+
+import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.*;
 
 @Entity
 @Table(name="empdb")
-@Data
-public class EmpEntity {
 
+public class EmpEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name= "emp_id")
@@ -21,4 +21,4 @@ public class EmpEntity {
     private String gender;
 
 
-   }
+}
