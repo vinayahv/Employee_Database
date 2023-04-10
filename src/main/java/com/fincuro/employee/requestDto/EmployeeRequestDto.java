@@ -1,16 +1,11 @@
-package com.fincuro.employee.employeeDto;
+package com.fincuro.employee.requestDto;
 
 import lombok.Data;
-import lombok.NonNull;
-import org.aspectj.bridge.IMessage;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class EmployeeDto {
-
-    private int id;
+public class EmployeeRequestDto {
     @NotNull(message="Name should not be null")
     private String name;
 

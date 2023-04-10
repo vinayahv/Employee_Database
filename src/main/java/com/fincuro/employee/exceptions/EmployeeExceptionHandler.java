@@ -5,10 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
-public class employeeExceptionHandler {
+public class EmployeeExceptionHandler {
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException resourceNotFoundException){
-        employeeExceptions employeeExceptions=new employeeExceptions(
+        EemployeeExceptions employeeExceptions=new EemployeeExceptions(
                 resourceNotFoundException.getMessage(),
                 resourceNotFoundException.getCause(),
                 HttpStatus.NOT_FOUND
@@ -19,7 +19,7 @@ public class employeeExceptionHandler {
 
     @ExceptionHandler(value = {DatabaseException.class})
     public ResponseEntity<Object> handleDatabaseException(DatabaseException databaseException){
-        employeeExceptions employeeExceptions=new employeeExceptions(
+        EemployeeExceptions employeeExceptions=new EemployeeExceptions(
                 databaseException.getMessage(),
                 databaseException.getCause(),
                 HttpStatus.NOT_FOUND

@@ -1,9 +1,10 @@
 package com.fincuro.employee.service.impl;
-import com.fincuro.employee.employeeDto.EmployeeDto;
+import com.fincuro.employee.employeeDto.EmployeeResponseDto;
 import com.fincuro.employee.entity.EmployeeEntity;
 import com.fincuro.employee.exceptions.DatabaseException;
 import com.fincuro.employee.exceptions.ResourceNotFoundException;
 import com.fincuro.employee.repository.EmployeeRepository;
+import com.fincuro.employee.requestDto.EmployeeRequestDto;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -15,11 +16,11 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class employeeServiceImplementation implements employeeService {
+public class EmployeeServiceImplementation implements EmployeeService {
         ModelMapper modelmapper= new ModelMapper();
         private final EmployeeRepository empRepository;
 
-    public employeeServiceImplementation(EmployeeRepository empRepository) {
+    public EmployeeServiceImplementation(EmployeeRepository empRepository) {
         this.empRepository = empRepository;
     }
 
@@ -31,9 +32,9 @@ public class employeeServiceImplementation implements employeeService {
      *
      */
     @Override
-        public List<EmployeeDto> findAllEmployee() {
+        public List<EmployeeResponseDto> findAllEmployee() {
             List<EmployeeEntity> employeeEntity = empRepository.findAll();
-            Type listType = new TypeToken<ArrayList<EmployeeDto>>() {
+            Type listType = new TypeToken<ArrayList<EmployeeResponseDto>>() {
             }.getType();
             return modelmapper.map(employeeEntity, listType);
         }
@@ -44,55 +45,56 @@ public class employeeServiceImplementation implements employeeService {
      * @return employee details
      */
     @Override
-        public Optional<EmployeeDto> findbyEmployeeId(int id) {
+        public Optional<EmployeeResponseDto> findbyEmployeeId(int id) {
 
         Optional<EmployeeEntity> employeeById = empRepository.findById(id);
         if(employeeById.isPresent() == false) {
             log.error("Requested employee id is not exist");
             throw new ResourceNotFoundException("Requested employee id is not exist");
         }
-            EmployeeDto map = modelmapper.map(employeeById, EmployeeDto.class);
+            EmployeeResponseDto map = modelmapper.map(employeeById, EmployeeResponseDto.class);
             return Optional.ofNullable(map);
         }
 
     /**
      * saveEmployee method
-     * @param employeeentity savingEmployee
+     * @param employeeRequestDto savingEmployee
      * @return saved employee
      */
     @Override
-        public EmployeeDto saveEmployee(EmployeeEntity employeeentity) {
-            EmployeeEntity entity;
+        public EmployeeResponseDto saveEmployee(EmployeeRequestDto employeeRequestDto) {
+        EmployeeEntity map = modelmapper.map(employeeRequestDto, EmployeeEntity.class);
+        EmployeeEntity entity;
             try{
-                entity=empRepository.save(employeeentity);
+                entity=empRepository.save(map);
             }
             catch (Exception exception){
                 log.error("Error while saving the employee details to the database", exception);
                 throw new DatabaseException("Error while saving the employee details to the database");
             }
-
-
-            EmployeeDto dto=modelmapper.map(entity,EmployeeDto.class);
+            EmployeeResponseDto dto=modelmapper.map(entity, EmployeeResponseDto.class);
             return dto;
         }
 
     /**
      * updateEmployee method
-     * @param employeeEntity updating employee entity
+     * @param employeeRequestDto updating employee entity
      * @return updated employee entity
      */
     @Override
-        public EmployeeDto updateEmployee(EmployeeEntity employeeEntity) {
-            EmployeeEntity entity;
+        public EmployeeResponseDto updateEmployee(EmployeeRequestDto employeeRequestDto){
+        EmployeeEntity map = modelmapper.map(employeeRequestDto, EmployeeEntity.class);
+        EmployeeEntity entity;
+
         try{
-            entity=empRepository.save(employeeEntity);
+            entity=empRepository.save(map);
         }
         catch (Exception exception){
             log.error("Error while saving the employee details to the database", exception);
             throw new DatabaseException("Error while saving the employee details to the database");
         }
 
-        EmployeeDto dto=modelmapper.map(entity,EmployeeDto.class);
+        EmployeeResponseDto dto=modelmapper.map(entity, EmployeeResponseDto.class);
             return dto;
 
         }
