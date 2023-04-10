@@ -1,4 +1,4 @@
-package com.emp.emp.project;
+package com.fincuro.employee;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.emp.emp.project;
+package com.fincuro.employee;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
