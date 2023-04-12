@@ -1,5 +1,6 @@
 package com.fincuro.employee.requestDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -11,4 +12,5 @@ public class EmployeeRequestDto {
 
     @NotNull(message="Gender should not be null")
     private String gender;
+
 }

@@ -48,13 +48,13 @@ public class EmployeeServiceImplementation implements EmployeeService {
         public Optional<EmployeeResponseDto> findbyEmployeeId(int id) {
 
         Optional<EmployeeEntity> employeeById = empRepository.findById(id);
-        if(employeeById.isPresent() == false) {
+        if(!employeeById.isPresent()) {
             log.error("Requested employee id is not exist");
             throw new ResourceNotFoundException("Requested employee id is not exist");
         }
             EmployeeResponseDto map = modelmapper.map(employeeById, EmployeeResponseDto.class);
             return Optional.ofNullable(map);
-        }
+    }
 
     /**
      * saveEmployee method
@@ -105,7 +105,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
      *
      */
     @Override
-        public void deleteEmployeeById(int id) {
+        public String deleteEmployeeById(int id) {
         Optional<EmployeeEntity> byId = empRepository.findById(id);
 
         if(!byId.isPresent()) {
@@ -113,6 +113,7 @@ public class EmployeeServiceImplementation implements EmployeeService {
             throw new ResourceNotFoundException("Requested employee id is not exist");
         }
         empRepository.deleteById(id);
+        return "DELETED";
 
         }
 

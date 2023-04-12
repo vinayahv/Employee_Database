@@ -15,7 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
-    private  final EmployeeService empService;
+    private final EmployeeService empService;
 
     public EmployeeController(EmployeeService empService) {
         this.empService = empService;
@@ -44,8 +44,9 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable("id")int id){
-        empService.deleteEmployeeById(id);
+    public String deleteEmployee(@PathVariable("id")int id){
+         empService.deleteEmployeeById(id);
+         return "DELETED";
     }
 }
 
